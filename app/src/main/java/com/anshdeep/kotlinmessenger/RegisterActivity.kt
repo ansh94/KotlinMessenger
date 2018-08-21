@@ -17,7 +17,11 @@ import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
-    var selectedPhotoUri: Uri? = null
+    private var selectedPhotoUri: Uri? = null
+
+    companion object {
+        val TAG = "RegisterActivity"
+    }
 
     @SuppressLint("LogNotTimber")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,12 +33,8 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         already_have_account_text_view.setOnClickListener {
-            Log.d("RegisterActivity", "Try to show login activity")
-
-            // launch the login activity
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-
         }
 
         selectphoto_button_register.setOnClickListener {
@@ -46,6 +46,8 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            Log.d(TAG, "Photo was selected")
+
             selectedPhotoUri = data.data
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
@@ -66,9 +68,10 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        Log.d("RegisterActivity", "Email is: $email")
-        Log.d("RegisterActivity", "Password is: $password")
+        Log.d(TAG, "Attempting to create user with email: $email")
 
+
+        // Firebase Authentication to create a user with email and password
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (!it.isSuccessful) return@addOnCompleteListener
@@ -79,7 +82,7 @@ class RegisterActivity : AppCompatActivity() {
                     uploadImageToFirebaseStorage()
                 }
                 .addOnFailureListener {
-                    Log.d("RegisterActivity", "Failed to create user: ${it.message}")
+                    Log.d(TAG, "Failed to create user: ${it.message}")
                     Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
                 }
     }
@@ -92,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.putFile(selectedPhotoUri!!)
                 .addOnSuccessListener {
-                    Log.d("RegisterActivity", "Successfully uploaded image: ${it.metadata?.path}")
+                    Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
 
                     ref.downloadUrl.addOnSuccessListener {
                         Log.d("RegisterActivity", "File Location: $it")
@@ -100,7 +103,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
                 .addOnFailureListener {
-                    //do something
+                    Log.d(TAG, "Failed to upload image to storage: ${it.message}")
                 }
     }
 
@@ -113,10 +116,10 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.setValue(user)
                 .addOnSuccessListener {
-                    Log.d("RegisterActivity", "Saved user to firebase database")
+                    Log.d(TAG, "Finally we saved the user to Firebase Database")
                 }
                 .addOnFailureListener {
-                    Log.d("RegisterActivity", "Failed to save user: ${it.message}")
+                    Log.d(TAG, "Failed to set value to database: ${it.message}")
                 }
     }
 }

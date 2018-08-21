@@ -18,9 +18,9 @@ class LoginActivity : AppCompatActivity() {
             val email = email_edittext_login.text.toString()
             val password = password_edittext_login.text.toString()
 
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener {  }
-                    .addOnFailureListener {  }
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { }
+                    .addOnFailureListener { }
         }
 
         back_to_register_textview.setOnClickListener {

@@ -1,10 +1,12 @@
-package com.anshdeep.kotlinmessenger
+package com.anshdeep.kotlinmessenger.messages
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.anshdeep.kotlinmessenger.R
+import com.anshdeep.kotlinmessenger.registerlogin.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LatestMessagesActivity : AppCompatActivity() {

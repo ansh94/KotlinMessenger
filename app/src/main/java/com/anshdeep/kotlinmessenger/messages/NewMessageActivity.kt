@@ -1,8 +1,10 @@
-package com.anshdeep.kotlinmessenger
+package com.anshdeep.kotlinmessenger.messages
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.anshdeep.kotlinmessenger.R
+import com.anshdeep.kotlinmessenger.models.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -33,9 +35,9 @@ class NewMessageActivity : AppCompatActivity() {
         fetchUsers()
     }
 
-    private fun fetchUsers(){
+    private fun fetchUsers() {
         val ref = FirebaseDatabase.getInstance().getReference("/users")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
@@ -45,9 +47,9 @@ class NewMessageActivity : AppCompatActivity() {
 
 
                 p0.children.forEach {
-                    Log.d("NewMessage",it.toString())
+                    Log.d("NewMessage", it.toString())
                     val user = it.getValue(User::class.java)
-                    if(user != null){
+                    if (user != null) {
                         adapter.add(UserItem(user))
                     }
                 }
@@ -58,7 +60,6 @@ class NewMessageActivity : AppCompatActivity() {
         })
     }
 }
-
 
 
 class UserItem(val user: User) : Item<ViewHolder>() {

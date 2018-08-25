@@ -1,9 +1,10 @@
-package com.anshdeep.kotlinmessenger
+package com.anshdeep.kotlinmessenger.registerlogin
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import com.anshdeep.kotlinmessenger.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 

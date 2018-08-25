@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_green_light"
-    tools:context=".RegisterActivity">
+    tools:context=".registerlogin.RegisterActivity">
 
     <EditText
         android:id="@+id/username_edittext_register"

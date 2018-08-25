@@ -1,4 +1,4 @@
-package com.anshdeep.kotlinmessenger
+package com.anshdeep.kotlinmessenger.registerlogin
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,6 +9,9 @@ import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import com.anshdeep.kotlinmessenger.R
+import com.anshdeep.kotlinmessenger.messages.LatestMessagesActivity
+import com.anshdeep.kotlinmessenger.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -119,7 +122,7 @@ class RegisterActivity : AppCompatActivity() {
                     Log.d(TAG, "Finally we saved the user to Firebase Database")
 
 
-                    val intent = Intent(this,LatestMessagesActivity::class.java)
+                    val intent = Intent(this, LatestMessagesActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
 
@@ -130,6 +133,3 @@ class RegisterActivity : AppCompatActivity() {
     }
 }
 
-class User(val uid: String, val username: String, val profileImageUrl: String){
-    constructor() : this("","","")
-}

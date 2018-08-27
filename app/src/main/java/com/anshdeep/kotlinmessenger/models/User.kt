@@ -1,8 +1,12 @@
 package com.anshdeep.kotlinmessenger.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Created by ansh on 25/08/18.
  */
-data class User(val uid: String, val username: String, val profileImageUrl: String) {
+@Parcelize
+data class User(val uid: String, val username: String, val profileImageUrl: String) : Parcelable {
     constructor() : this("", "", "")
 }

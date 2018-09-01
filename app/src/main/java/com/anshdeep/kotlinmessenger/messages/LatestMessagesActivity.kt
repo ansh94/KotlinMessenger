@@ -19,11 +19,11 @@ import kotlinx.android.synthetic.main.latest_message_row.view.*
 
 class LatestMessagesActivity : AppCompatActivity() {
 
-    val adapter  = GroupAdapter<ViewHolder>()
+    val adapter = GroupAdapter<ViewHolder>()
 
 
     companion object {
-        var currentUser : User? = null
+        var currentUser: User? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,15 +31,12 @@ class LatestMessagesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_latest_messages)
         recyclerview_latest_messages.adapter = adapter
 
-
         fetchCurrentUser()
         verifyUserIsLoggedIn()
-
-//        setupDummyRows()
         listenForLatestMessages()
     }
 
-    class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>(){
+    class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
         override fun getLayout(): Int {
             return R.layout.latest_message_row
         }
@@ -50,20 +47,20 @@ class LatestMessagesActivity : AppCompatActivity() {
 
     }
 
-    val latestMessagesMap = HashMap<String,ChatMessage>()
+    val latestMessagesMap = HashMap<String, ChatMessage>()
 
-    private fun refreshRecyclerViewMessages(){
+    private fun refreshRecyclerViewMessages() {
         adapter.clear()
         latestMessagesMap.values.forEach {
             adapter.add(LatestMessageRow(it))
         }
     }
 
-    private fun listenForLatestMessages(){
+    private fun listenForLatestMessages() {
         val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
 
-        ref.addChildEventListener(object : ChildEventListener{
+        ref.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
             }
 
@@ -89,20 +86,10 @@ class LatestMessagesActivity : AppCompatActivity() {
         })
     }
 
-//    private fun setupDummyRows(){
-//
-//        adapter.add(LatestMessageRow())
-//        adapter.add(LatestMessageRow())
-//        adapter.add(LatestMessageRow())
-//        adapter.add(LatestMessageRow())
-//
-//    }
-
-
-    private fun fetchCurrentUser(){
+    private fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
@@ -124,12 +111,12 @@ class LatestMessagesActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.nav_menu,menu)
+        menuInflater.inflate(R.menu.nav_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             R.id.menu_new_message -> {
                 val intent = Intent(this, NewMessageActivity::class.java)
                 startActivity(intent)
@@ -142,7 +129,6 @@ class LatestMessagesActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
 
         return super.onOptionsItemSelected(item)
     }

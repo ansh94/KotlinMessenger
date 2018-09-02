@@ -87,8 +87,6 @@ class ChatLogActivity : AppCompatActivity() {
 
     private fun performSendMessage() {
         val text = edittext_chat_log.text.toString()
-//        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
-
 
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         val fromId = FirebaseAuth.getInstance().uid

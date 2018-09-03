@@ -3,6 +3,7 @@ package com.anshdeep.kotlinmessenger.messages
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.view.Menu
 import android.view.MenuItem
 import com.anshdeep.kotlinmessenger.R
@@ -31,6 +32,7 @@ class LatestMessagesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latest_messages)
         recyclerview_latest_messages.adapter = adapter
+        recyclerview_latest_messages.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         fetchCurrentUser()
         verifyUserIsLoggedIn()

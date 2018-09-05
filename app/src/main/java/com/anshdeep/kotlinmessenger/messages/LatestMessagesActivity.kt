@@ -35,6 +35,11 @@ class LatestMessagesActivity : AppCompatActivity() {
         fetchCurrentUser()
         verifyUserIsLoggedIn()
         listenForLatestMessages()
+        
+        adapter.setOnItemClickListener { item, view ->
+            val intent = Intent(this,ChatLogActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

@@ -17,6 +17,9 @@ import kotlinx.android.synthetic.main.latest_message_row.view.*
  * Created by ansh on 04/09/18.
  */
 class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
+
+    var chatPartnerUser: User? = null
+
     override fun getLayout(): Int {
         return R.layout.latest_message_row
     }
@@ -38,10 +41,10 @@ class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val user = p0.getValue(User::class.java)
-                viewHolder.itemView.username_textview_latest_message.text = user?.username
+                chatPartnerUser = p0.getValue(User::class.java)
+                viewHolder.itemView.username_textview_latest_message.text = chatPartnerUser?.username
 
-                Picasso.get().load(user?.profileImageUrl).into(viewHolder.itemView.imageview_latest_message)
+                Picasso.get().load(chatPartnerUser?.profileImageUrl).into(viewHolder.itemView.imageview_latest_message)
             }
 
         })

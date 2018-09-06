@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.view.Menu
 import android.view.MenuItem
 import com.anshdeep.kotlinmessenger.R
+import com.anshdeep.kotlinmessenger.messages.NewMessageActivity.Companion.USER_KEY
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
 import com.anshdeep.kotlinmessenger.registerlogin.RegisterActivity
@@ -35,13 +36,14 @@ class LatestMessagesActivity : AppCompatActivity() {
         fetchCurrentUser()
         verifyUserIsLoggedIn()
         listenForLatestMessages()
-        
+
         adapter.setOnItemClickListener { item, view ->
-            val intent = Intent(this,ChatLogActivity::class.java)
+            val intent = Intent(this, ChatLogActivity::class.java)
+            val row = item as LatestMessageRow
+            intent.putExtra(USER_KEY, row.chatPartnerUser)
             startActivity(intent)
         }
     }
-
 
 
     val latestMessagesMap = HashMap<String, ChatMessage>()

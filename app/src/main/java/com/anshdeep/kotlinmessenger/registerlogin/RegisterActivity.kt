@@ -30,6 +30,8 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        supportActionBar!!.elevation = 0.0f
+
 
         register_button_register.setOnClickListener {
             performRegister()

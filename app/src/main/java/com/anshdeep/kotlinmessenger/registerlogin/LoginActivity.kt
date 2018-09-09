@@ -16,6 +16,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        supportActionBar!!.elevation = 0.0f
+
 
         login_button_login.setOnClickListener {
             performLogin()

@@ -14,7 +14,7 @@
         tools:context=".registerlogin.RegisterActivity">
 
         <EditText
-            android:id="@+id/username_edittext_register"
+            android:id="@+id/name_edittext_register"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginEnd="32dp"
@@ -24,7 +24,7 @@
             android:layout_marginTop="32dp"
             android:background="@drawable/rounded_edittext_register_login"
             android:ems="10"
-            android:hint="Username"
+            android:hint="Name"
             android:inputType="textPersonName"
             android:paddingLeft="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,9 +41,21 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:paddingLeft="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/username_edittext_register"
-            app:layout_constraintStart_toStartOf="@+id/username_edittext_register"
-            app:layout_constraintTop_toBottomOf="@+id/username_edittext_register"/>
+            app:layout_constraintEnd_toEndOf="@+id/name_edittext_register"
+            app:layout_constraintStart_toStartOf="@+id/name_edittext_register"
+            app:layout_constraintTop_toBottomOf="@+id/name_edittext_register"/>
+
+        <!--<ProgressBar-->
+            <!--android:id="@+id/loading"-->
+            <!--android:layout_width="48dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:indeterminate="true"-->
+            <!--android:visibility="visible"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.526"-->
+            <!--app:layout_constraintStart_toStartOf="parent"/>-->
 
         <EditText
             android:id="@+id/password_edittext_register"

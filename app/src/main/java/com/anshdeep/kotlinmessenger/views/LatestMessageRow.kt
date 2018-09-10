@@ -42,7 +42,7 @@ class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 chatPartnerUser = p0.getValue(User::class.java)
-                viewHolder.itemView.username_textview_latest_message.text = chatPartnerUser?.username
+                viewHolder.itemView.username_textview_latest_message.text = chatPartnerUser?.name
 
                 Picasso.get().load(chatPartnerUser?.profileImageUrl).into(viewHolder.itemView.imageview_latest_message)
             }

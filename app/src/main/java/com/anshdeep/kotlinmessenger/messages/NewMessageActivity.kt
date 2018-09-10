@@ -81,7 +81,7 @@ class NewMessageActivity : AppCompatActivity() {
 class UserItem(val user: User) : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.username_textview_new_message.text = user.username
+        viewHolder.itemView.username_textview_new_message.text = user.name
 
         Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
     }

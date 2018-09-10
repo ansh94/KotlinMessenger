@@ -1,6 +1,5 @@
 package com.anshdeep.kotlinmessenger.registerlogin
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -23,10 +22,9 @@ class RegisterActivity : AppCompatActivity() {
     private var selectedPhotoUri: Uri? = null
 
     companion object {
-        val TAG = "RegisterActivity"
+        val TAG = RegisterActivity::class.java.simpleName!!
     }
 
-    @SuppressLint("LogNotTimber")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -67,9 +65,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun performRegister() {
         val email = email_edittext_register.text.toString()
         val password = password_edittext_register.text.toString()
+        val name = name_edittext_register.text.toString()
 
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter text in email/password", Toast.LENGTH_SHORT).show()
+        if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
+            Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -82,42 +81,50 @@ class RegisterActivity : AppCompatActivity() {
                     if (!it.isSuccessful) return@addOnCompleteListener
 
                     // else if successful
-                    Log.d("RegisterActivity", "Successfully created user with uid: ${it.result.user.uid}")
-
+                    Log.d(TAG, "Successfully created user with uid: ${it.result.user.uid}")
                     uploadImageToFirebaseStorage()
                 }
                 .addOnFailureListener {
                     Log.d(TAG, "Failed to create user: ${it.message}")
-                    Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "${it.message}", Toast.LENGTH_LONG).show()
                 }
     }
 
     private fun uploadImageToFirebaseStorage() {
-        if (selectedPhotoUri == null) return
+        if (selectedPhotoUri == null) {
+            // save user without photo
+            saveUserToFirebaseDatabase(null)
+        } else {
+            val filename = UUID.randomUUID().toString()
+            val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
 
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+            ref.putFile(selectedPhotoUri!!)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
 
-        ref.putFile(selectedPhotoUri!!)
-                .addOnSuccessListener {
-                    Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
-
-                    ref.downloadUrl.addOnSuccessListener {
-                        Log.d("RegisterActivity", "File Location: $it")
-                        saveUserToFirebaseDatabase(it.toString())
+                        ref.downloadUrl.addOnSuccessListener {
+                            Log.d(TAG, "File Location: $it")
+                            saveUserToFirebaseDatabase(it.toString())
+                        }
                     }
-                }
-                .addOnFailureListener {
-                    Log.d(TAG, "Failed to upload image to storage: ${it.message}")
-                }
+                    .addOnFailureListener {
+                        Log.d(TAG, "Failed to upload image to storage: ${it.message}")
+                    }
+        }
+
     }
 
-    private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
+    private fun saveUserToFirebaseDatabase(profileImageUrl: String?) {
         val uid = FirebaseAuth.getInstance().uid ?: ""
 
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
-        val user = User(uid, username_edittext_register.text.toString(), profileImageUrl)
+        val user: User
+        user = if (profileImageUrl == null) {
+            User(uid, name_edittext_register.text.toString(), null)
+        } else {
+            User(uid, name_edittext_register.text.toString(), profileImageUrl)
+        }
 
         ref.setValue(user)
                 .addOnSuccessListener {

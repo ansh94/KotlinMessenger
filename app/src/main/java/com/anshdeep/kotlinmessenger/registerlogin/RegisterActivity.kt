@@ -28,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        supportActionBar!!.elevation = 0.0f
+        supportActionBar?.elevation = 0.0f
 
 
         register_button_register.setOnClickListener {
@@ -71,8 +71,6 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             return
         }
-
-        Log.d(TAG, "Attempting to create user with email: $email")
 
 
         // Firebase Authentication to create a user with email and password

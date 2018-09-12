@@ -38,6 +38,7 @@ class RegisterActivity : AppCompatActivity() {
         already_have_account_text_view.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.enter, R.anim.exit)
         }
 
         selectphoto_button_register.setOnClickListener {

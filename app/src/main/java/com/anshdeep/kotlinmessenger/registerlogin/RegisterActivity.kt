@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.messages.LatestMessagesActivity
@@ -73,7 +74,8 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-
+        already_have_account_text_view.visibility = View.GONE
+        loading_view.visibility = View.VISIBLE
         // Firebase Authentication to create a user with email and password
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
@@ -85,6 +87,8 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener {
                     Log.d(TAG, "Failed to create user: ${it.message}")
+                    loading_view.visibility = View.GONE
+                    already_have_account_text_view.visibility = View.VISIBLE
                     Toast.makeText(this, "${it.message}", Toast.LENGTH_LONG).show()
                 }
     }
@@ -108,6 +112,8 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     .addOnFailureListener {
                         Log.d(TAG, "Failed to upload image to storage: ${it.message}")
+                        loading_view.visibility = View.GONE
+                        already_have_account_text_view.visibility = View.VISIBLE
                     }
         }
 
@@ -137,6 +143,8 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener {
                     Log.d(TAG, "Failed to set value to database: ${it.message}")
+                    loading_view.visibility = View.GONE
+                    already_have_account_text_view.visibility = View.VISIBLE
                 }
     }
 }

@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-androidExtensions{
+androidExtensions {
     experimental = true
 }
 
@@ -44,10 +44,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0-rc01'
     implementation 'com.xwray:groupie:2.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'io.saeid:fab-loading:1.0.0'
-    implementation 'com.roger.catloadinglibrary:catloadinglibrary:1.0.4'
-    implementation 'io.supercharge:funnyloader:0.2.0'
-
+    implementation 'com.wang.avi:library:2.1.3'
 
 }
 apply plugin: 'com.google.gms.google-services'

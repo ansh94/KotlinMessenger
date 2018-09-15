@@ -33,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
         register_button_register.setOnClickListener {
-            performRegister()
+            performRegistration()
         }
 
         already_have_account_text_view.setOnClickListener {
@@ -64,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun performRegister() {
+    private fun performRegistration() {
         val email = email_edittext_register.text.toString()
         val password = password_edittext_register.text.toString()
         val name = name_edittext_register.text.toString()
@@ -76,6 +76,7 @@ class RegisterActivity : AppCompatActivity() {
 
         already_have_account_text_view.visibility = View.GONE
         loading_view.visibility = View.VISIBLE
+
         // Firebase Authentication to create a user with email and password
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {

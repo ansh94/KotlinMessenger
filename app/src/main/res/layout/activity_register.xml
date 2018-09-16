@@ -45,18 +45,6 @@
             app:layout_constraintStart_toStartOf="@+id/name_edittext_register"
             app:layout_constraintTop_toBottomOf="@+id/name_edittext_register"/>
 
-        <!--<ProgressBar-->
-        <!--android:id="@+id/loading"-->
-        <!--android:layout_width="48dp"-->
-        <!--android:layout_height="48dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:indeterminate="true"-->
-        <!--android:visibility="visible"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.526"-->
-        <!--app:layout_constraintStart_toStartOf="parent"/>-->
-
         <EditText
             android:id="@+id/password_edittext_register"
             android:layout_width="0dp"
@@ -114,7 +102,7 @@
             android:layout_marginTop="20dp"
             android:visibility="gone"
             app:indicatorColor="@color/colorAccent"
-            app:indicatorName="PacmanIndicator"
+            app:indicatorName="SemiCircleSpinIndicator"
             app:layout_constraintEnd_toEndOf="@+id/register_button_register"
             app:layout_constraintStart_toStartOf="@+id/register_button_register"
             app:layout_constraintTop_toBottomOf="@+id/register_button_register"/>

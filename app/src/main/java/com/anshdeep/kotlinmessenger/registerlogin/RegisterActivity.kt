@@ -140,7 +140,7 @@ class RegisterActivity : AppCompatActivity() {
                     val intent = Intent(this, LatestMessagesActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
-
+                    overridePendingTransition(R.anim.enter, R.anim.exit)
                 }
                 .addOnFailureListener {
                     Log.d(TAG, "Failed to set value to database: ${it.message}")

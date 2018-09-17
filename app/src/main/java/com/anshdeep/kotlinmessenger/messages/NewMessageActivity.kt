@@ -84,7 +84,7 @@ class UserItem(val user: User) : Item<ViewHolder>() {
         viewHolder.itemView.username_textview_new_message.text = user.name
 
         if (!user.profileImageUrl!!.isEmpty()) {
-            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.ic_person_black_24dp).into(viewHolder.itemView.imageview_new_message)
+            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(viewHolder.itemView.imageview_new_message)
         }
     }
 

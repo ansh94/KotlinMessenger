@@ -64,7 +64,7 @@ class NewMessageActivity : AppCompatActivity() {
                     val userItem = item as UserItem
 
                     val intent = Intent(view.context, ChatLogActivity::class.java)
-                    intent.putExtra(USER_KEY,userItem.user)
+                    intent.putExtra(USER_KEY, userItem.user)
                     startActivity(intent)
 
                     finish()
@@ -83,7 +83,9 @@ class UserItem(val user: User) : Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.username_textview_new_message.text = user.name
 
-        Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.imageview_new_message)
+        if (!user.profileImageUrl!!.isEmpty()) {
+            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.ic_person_black_24dp).into(viewHolder.itemView.imageview_new_message)
+        }
     }
 
     override fun getLayout(): Int {

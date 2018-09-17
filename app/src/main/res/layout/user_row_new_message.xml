@@ -5,18 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp">
+    android:background="?attr/selectableItemBackground"
+    android:layout_marginTop="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageview_new_message"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:civ_border_width="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_person_black_24dp"
+        android:backgroundTint="@android:color/darker_gray"
+        app:civ_fill_color="@android:color/darker_gray"
+        app:civ_circle_background_color="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_dialog"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/username_textview_new_message"
@@ -28,7 +33,7 @@
         android:layout_marginTop="8dp"
         android:text="Username"
         android:textColor="@android:color/black"
-        android:textSize="16sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_new_message"
         app:layout_constraintEnd_toEndOf="parent"

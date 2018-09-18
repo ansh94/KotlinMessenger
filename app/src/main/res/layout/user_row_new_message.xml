@@ -16,9 +16,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/no_image2"
-        android:backgroundTint="@android:color/darker_gray"
-        app:civ_fill_color="@android:color/darker_gray"
-        app:civ_circle_background_color="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

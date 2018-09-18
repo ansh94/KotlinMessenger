@@ -44,7 +44,9 @@ class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
                 chatPartnerUser = p0.getValue(User::class.java)
                 viewHolder.itemView.username_textview_latest_message.text = chatPartnerUser?.name
 
-                Picasso.get().load(chatPartnerUser?.profileImageUrl).into(viewHolder.itemView.imageview_latest_message)
+                if(!chatPartnerUser?.profileImageUrl?.isEmpty()!!){
+                    Picasso.get().load(chatPartnerUser?.profileImageUrl).placeholder(R.drawable.no_image2).into(viewHolder.itemView.imageview_latest_message)
+                }
             }
 
         })

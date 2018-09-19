@@ -127,7 +127,10 @@ class ChatFromItem(val text: String, val user: User) : Item<ViewHolder>() {
         viewHolder.itemView.textview_from_row.text = text
 
         val targetImageView = viewHolder.itemView.imageview_chat_from_row
-        Picasso.get().load(user.profileImageUrl).into(targetImageView)
+
+        if (!user.profileImageUrl!!.isEmpty()) {
+            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
+        }
     }
 
     override fun getLayout(): Int {
@@ -142,7 +145,10 @@ class ChatToItem(val text: String, val user: User) : Item<ViewHolder>() {
         viewHolder.itemView.textview_to_row.text = text
 
         val targetImageView = viewHolder.itemView.imageview_chat_to_row
-        Picasso.get().load(user.profileImageUrl).into(targetImageView)
+
+        if (!user.profileImageUrl!!.isEmpty()) {
+            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
+        }
     }
 
     override fun getLayout(): Int {

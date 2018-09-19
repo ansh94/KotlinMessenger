@@ -23,12 +23,11 @@
         android:id="@+id/imageview_chat_from_row"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:civ_border_width="2dp"
+        android:src="@drawable/no_image2"
         app:civ_border_color="@android:color/black"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_on"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -29,11 +29,14 @@ class LatestMessagesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latest_messages)
+        verifyUserIsLoggedIn()
+
         recyclerview_latest_messages.adapter = adapter
+
+        swiperefresh.setColorSchemeColors(resources.getColor(R.color.colorAccent))
 
 //        recyclerview_latest_messages.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         fetchCurrentUser()
-        verifyUserIsLoggedIn()
         listenForLatestMessages()
 
         adapter.setOnItemClickListener { item, view ->
@@ -47,6 +50,12 @@ class LatestMessagesActivity : AppCompatActivity() {
             val intent = Intent(this, NewMessageActivity::class.java)
             startActivity(intent)
         }
+
+        swiperefresh.setOnRefreshListener {
+            verifyUserIsLoggedIn()
+            fetchCurrentUser()
+            listenForLatestMessages()
+        }
     }
 
 
@@ -57,9 +66,12 @@ class LatestMessagesActivity : AppCompatActivity() {
         latestMessagesMap.values.forEach {
             adapter.add(LatestMessageRow(it))
         }
+        swiperefresh.isRefreshing = false
     }
 
     private fun listenForLatestMessages() {
+
+        swiperefresh.isRefreshing = true
         val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
 

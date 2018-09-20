@@ -7,15 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".messages.LatestMessagesActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_latest_messages"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_latest_messages"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/new_message_fab"
@@ -24,7 +33,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/ic_message_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_latest_messages"
+        app:layout_constraintBottom_toBottomOf="@+id/swiperefresh"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

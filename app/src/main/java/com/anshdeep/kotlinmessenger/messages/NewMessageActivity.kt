@@ -27,6 +27,8 @@ class NewMessageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
 
+        swiperefresh.setColorSchemeColors(resources.getColor(R.color.colorAccent))
+
         supportActionBar?.title = "Select User"
 
 //        val adapter = GroupAdapter<ViewHolder>()
@@ -38,9 +40,15 @@ class NewMessageActivity : AppCompatActivity() {
 //        recyclerview_newmessage.adapter = adapter
 
         fetchUsers()
+
+        swiperefresh.setOnRefreshListener {
+            fetchUsers()
+        }
     }
 
     private fun fetchUsers() {
+        swiperefresh.isRefreshing = true
+
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -71,6 +79,7 @@ class NewMessageActivity : AppCompatActivity() {
                 }
 
                 recyclerview_newmessage.adapter = adapter
+                swiperefresh.isRefreshing = false
             }
 
         })

@@ -5,6 +5,7 @@
     <item
         android:id="@+id/menu_sign_out"
         android:title="Sign Out"
+        android:icon="@drawable/ic_power_settings_new_black_24dp"
         app:showAsAction="ifRoom"/>
 
 </menu>

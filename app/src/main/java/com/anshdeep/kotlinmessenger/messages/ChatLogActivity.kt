@@ -3,6 +3,7 @@ package com.anshdeep.kotlinmessenger.messages
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
@@ -89,6 +90,10 @@ class ChatLogActivity : AppCompatActivity() {
 
     private fun performSendMessage() {
         val text = edittext_chat_log.text.toString()
+        if(text.isEmpty()){
+            Toast.makeText(this, "Message cannot be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         val fromId = FirebaseAuth.getInstance().uid

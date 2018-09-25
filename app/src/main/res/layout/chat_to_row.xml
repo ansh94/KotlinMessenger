@@ -12,10 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_edittext_register_login"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_bg_outgoing_bubble"
         android:maxWidth="240dp"
-        android:padding="16dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
         android:text="This is my message that will wrap into multiple lines and keep going"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toStartOf="@+id/imageview_chat_to_row"
         app:layout_constraintTop_toTopOf="@+id/imageview_chat_to_row"/>
 
@@ -24,9 +29,9 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/no_image2"
         app:civ_border_color="@android:color/black"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 

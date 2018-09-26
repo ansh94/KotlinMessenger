@@ -20,12 +20,15 @@ import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 
+
+
+
 class ChatLogActivity : AppCompatActivity() {
     companion object {
         val TAG = "ChatLog"
     }
-
     val adapter = GroupAdapter<ViewHolder>()
+
 
     var toUser: User? = null
 
@@ -68,6 +71,7 @@ class ChatLogActivity : AppCompatActivity() {
 
                 if (chatMessage != null) {
 
+
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = LatestMessagesActivity.currentUser
                         adapter.add(ChatFromItem(chatMessage.text, currentUser!!))
@@ -90,7 +94,7 @@ class ChatLogActivity : AppCompatActivity() {
 
     private fun performSendMessage() {
         val text = edittext_chat_log.text.toString()
-        if(text.isEmpty()){
+        if (text.isEmpty()) {
             Toast.makeText(this, "Message cannot be empty", Toast.LENGTH_SHORT).show()
             return
         }
@@ -129,6 +133,17 @@ class ChatLogActivity : AppCompatActivity() {
 class ChatFromItem(val text: String, val user: User) : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
+        Log.d(ChatLogActivity.TAG,"message: $text")
+        Log.d(ChatLogActivity.TAG, "user message position: $position")
+
+
+//        if (position > 0 && fromMessages.get(position-1).user.equals(fromMessages.get(position-1).user)){
+//            viewHolder.itemView.textview_from_row.background = ContextCompat.getDrawable(viewHolder.itemView.textview_from_row.context,R.drawable.rounded_edittext_register_login)
+//            // set layout for second message style
+//        } else {
+//            // set layout for the first message style
+//        }
+
         viewHolder.itemView.textview_from_row.text = text
 
         val targetImageView = viewHolder.itemView.imageview_chat_from_row

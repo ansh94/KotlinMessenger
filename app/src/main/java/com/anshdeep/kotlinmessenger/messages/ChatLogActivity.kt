@@ -19,14 +19,15 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
-
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ChatLogActivity : AppCompatActivity() {
     companion object {
         val TAG = "ChatLog"
     }
+
     val adapter = GroupAdapter<ViewHolder>()
 
 
@@ -74,9 +75,9 @@ class ChatLogActivity : AppCompatActivity() {
 
                     if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
                         val currentUser = LatestMessagesActivity.currentUser
-                        adapter.add(ChatFromItem(chatMessage.text, currentUser!!))
+                        adapter.add(ChatFromItem(chatMessage.text, currentUser!!, chatMessage.timestamp))
                     } else {
-                        adapter.add(ChatToItem(chatMessage.text, toUser!!))
+                        adapter.add(ChatToItem(chatMessage.text, toUser!!, chatMessage.timestamp))
                     }
 
                 }
@@ -127,24 +128,21 @@ class ChatLogActivity : AppCompatActivity() {
         latestMessageToRef.setValue(chatMessage)
     }
 
-
 }
 
-class ChatFromItem(val text: String, val user: User) : Item<ViewHolder>() {
+private fun getFormattedTime(timeInMilis: Long): String {
+    val date = Date(timeInMilis * 1000L) // *1000 is to convert seconds to milliseconds
+    val sdf = SimpleDateFormat("d MMM, h:mm a") // the format of your date
+
+    return sdf.format(date)
+}
+
+class ChatFromItem(val text: String, val user: User, val timestamp: Long) : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        Log.d(ChatLogActivity.TAG,"message: $text")
-        Log.d(ChatLogActivity.TAG, "user message position: $position")
-
-
-//        if (position > 0 && fromMessages.get(position-1).user.equals(fromMessages.get(position-1).user)){
-//            viewHolder.itemView.textview_from_row.background = ContextCompat.getDrawable(viewHolder.itemView.textview_from_row.context,R.drawable.rounded_edittext_register_login)
-//            // set layout for second message style
-//        } else {
-//            // set layout for the first message style
-//        }
 
         viewHolder.itemView.textview_from_row.text = text
+        viewHolder.itemView.from_msg_time.text = getFormattedTime(timestamp)
 
         val targetImageView = viewHolder.itemView.imageview_chat_from_row
 
@@ -157,12 +155,15 @@ class ChatFromItem(val text: String, val user: User) : Item<ViewHolder>() {
         return R.layout.chat_from_row
     }
 
+
 }
 
-class ChatToItem(val text: String, val user: User) : Item<ViewHolder>() {
+
+class ChatToItem(val text: String, val user: User, val timestamp: Long) : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_to_row.text = text
+        viewHolder.itemView.to_msg_time.text = getFormattedTime(timestamp)
 
         val targetImageView = viewHolder.itemView.imageview_chat_to_row
 

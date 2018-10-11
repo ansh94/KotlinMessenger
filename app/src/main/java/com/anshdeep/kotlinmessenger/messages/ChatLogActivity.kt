@@ -25,7 +25,7 @@ import java.util.*
 
 class ChatLogActivity : AppCompatActivity() {
     companion object {
-        val TAG = "ChatLog"
+        val TAG = "ChatLogActivity"
     }
 
     val adapter = GroupAdapter<ViewHolder>()

@@ -3,6 +3,7 @@ package com.anshdeep.kotlinmessenger.views
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
+import com.anshdeep.kotlinmessenger.utils.DateUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -43,6 +44,7 @@ class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
             override fun onDataChange(p0: DataSnapshot) {
                 chatPartnerUser = p0.getValue(User::class.java)
                 viewHolder.itemView.username_textview_latest_message.text = chatPartnerUser?.name
+                viewHolder.itemView.latest_msg_time.text = DateUtils.getFormattedTime(chatMessage.timestamp)
 
                 if (!chatPartnerUser?.profileImageUrl?.isEmpty()!!) {
                     Picasso.get().load(chatPartnerUser?.profileImageUrl).placeholder(R.drawable.no_image2).into(viewHolder.itemView.imageview_latest_message)

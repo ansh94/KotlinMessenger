@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
+import com.anshdeep.kotlinmessenger.utils.DateUtils.getFormattedTimeChatLog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -19,8 +20,6 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class ChatLogActivity : AppCompatActivity() {
@@ -130,19 +129,13 @@ class ChatLogActivity : AppCompatActivity() {
 
 }
 
-private fun getFormattedTime(timeInMilis: Long): String {
-    val date = Date(timeInMilis * 1000L) // *1000 is to convert seconds to milliseconds
-    val sdf = SimpleDateFormat("d MMM, h:mm a") // the format of your date
-
-    return sdf.format(date)
-}
 
 class ChatFromItem(val text: String, val user: User, val timestamp: Long) : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
         viewHolder.itemView.textview_from_row.text = text
-        viewHolder.itemView.from_msg_time.text = getFormattedTime(timestamp)
+        viewHolder.itemView.from_msg_time.text = getFormattedTimeChatLog(timestamp)
 
         val targetImageView = viewHolder.itemView.imageview_chat_from_row
 
@@ -163,7 +156,7 @@ class ChatToItem(val text: String, val user: User, val timestamp: Long) : Item<V
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_to_row.text = text
-        viewHolder.itemView.to_msg_time.text = getFormattedTime(timestamp)
+        viewHolder.itemView.to_msg_time.text = getFormattedTimeChatLog(timestamp)
 
         val targetImageView = viewHolder.itemView.imageview_chat_to_row
 

@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-
 /**
  * Created by ansh on 13/10/18.
  */
@@ -43,6 +42,6 @@ object DateUtils {
     }
 
     fun isToday(d: Date): Boolean {
-        return DateUtils.isToday(d.time )
+        return DateUtils.isToday(d.time)
     }
 }

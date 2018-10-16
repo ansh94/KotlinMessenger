@@ -140,6 +140,9 @@ class ChatFromItem(val text: String, val user: User, val timestamp: Long) : Item
         val targetImageView = viewHolder.itemView.imageview_chat_from_row
 
         if (!user.profileImageUrl!!.isEmpty()) {
+
+            //Todo: Change image loading from picasso to glide (refer latest messages activity))
+
             Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
         }
     }
@@ -161,6 +164,9 @@ class ChatToItem(val text: String, val user: User, val timestamp: Long) : Item<V
         val targetImageView = viewHolder.itemView.imageview_chat_to_row
 
         if (!user.profileImageUrl!!.isEmpty()) {
+
+          //Todo: Change image loading from picasso to glide (refer latest messages activity)
+
             Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
         }
     }

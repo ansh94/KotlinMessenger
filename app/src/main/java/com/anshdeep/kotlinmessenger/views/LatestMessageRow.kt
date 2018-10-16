@@ -4,12 +4,13 @@ import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
 import com.anshdeep.kotlinmessenger.utils.DateUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.latest_message_row.view.*
@@ -47,7 +48,15 @@ class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
                 viewHolder.itemView.latest_msg_time.text = DateUtils.getFormattedTime(chatMessage.timestamp)
 
                 if (!chatPartnerUser?.profileImageUrl?.isEmpty()!!) {
-                    Picasso.get().load(chatPartnerUser?.profileImageUrl).placeholder(R.drawable.no_image2).into(viewHolder.itemView.imageview_latest_message)
+                    val requestOptions = RequestOptions().placeholder(R.drawable.no_image2)
+
+                    Glide.with(viewHolder.itemView.imageview_latest_message.context)
+                            .load(chatPartnerUser?.profileImageUrl)
+                            .thumbnail(0.1f)
+                            .apply(requestOptions)
+                            .into(viewHolder.itemView.imageview_latest_message)
+
+//                    Picasso.get().load(chatPartnerUser?.profileImageUrl).placeholder(R.drawable.no_image2).into(viewHolder.itemView.imageview_latest_message)
                 }
             }
 

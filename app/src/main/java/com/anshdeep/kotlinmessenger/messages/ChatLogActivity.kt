@@ -8,12 +8,13 @@ import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
 import com.anshdeep.kotlinmessenger.utils.DateUtils.getFormattedTimeChatLog
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -141,9 +142,17 @@ class ChatFromItem(val text: String, val user: User, val timestamp: Long) : Item
 
         if (!user.profileImageUrl!!.isEmpty()) {
 
-            //Todo: Change image loading from picasso to glide (refer latest messages activity))
+            val requestOptions = RequestOptions().placeholder(R.drawable.no_image2)
 
-            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
+
+            Glide.with(targetImageView.context)
+                    .load(user.profileImageUrl)
+                    .thumbnail(0.1f)
+                    .apply(requestOptions)
+                    .into(targetImageView)
+
+
+//            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
         }
     }
 
@@ -165,9 +174,16 @@ class ChatToItem(val text: String, val user: User, val timestamp: Long) : Item<V
 
         if (!user.profileImageUrl!!.isEmpty()) {
 
-          //Todo: Change image loading from picasso to glide (refer latest messages activity)
+            val requestOptions = RequestOptions().placeholder(R.drawable.no_image2)
 
-            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
+
+            Glide.with(targetImageView.context)
+                    .load(user.profileImageUrl)
+                    .thumbnail(0.1f)
+                    .apply(requestOptions)
+                    .into(targetImageView)
+
+//            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
         }
     }
 

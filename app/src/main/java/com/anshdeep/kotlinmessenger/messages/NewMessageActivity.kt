@@ -6,12 +6,13 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.models.User
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -88,9 +89,16 @@ class UserItem(val user: User) : Item<ViewHolder>() {
         viewHolder.itemView.username_textview_new_message.text = user.name
 
         if (!user.profileImageUrl!!.isEmpty()) {
-            //Todo: Change image loading from picasso to glide (refer latest messages activity))
+            val requestOptions = RequestOptions().placeholder(R.drawable.no_image2)
 
-            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(viewHolder.itemView.imageview_new_message)
+
+            Glide.with(viewHolder.itemView.imageview_new_message.context)
+                    .load(user.profileImageUrl)
+                    .thumbnail(0.1f)
+                    .apply(requestOptions)
+                    .into(viewHolder.itemView.imageview_new_message)
+
+//            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(viewHolder.itemView.imageview_new_message)
         }
     }
 

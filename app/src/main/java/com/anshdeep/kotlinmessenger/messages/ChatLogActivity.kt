@@ -151,8 +151,6 @@ class ChatFromItem(val text: String, val user: User, val timestamp: Long) : Item
                     .apply(requestOptions)
                     .into(targetImageView)
 
-
-//            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
         }
     }
 
@@ -183,7 +181,6 @@ class ChatToItem(val text: String, val user: User, val timestamp: Long) : Item<V
                     .apply(requestOptions)
                     .into(targetImageView)
 
-//            Picasso.get().load(user.profileImageUrl).placeholder(R.drawable.no_image2).into(targetImageView)
         }
     }
 

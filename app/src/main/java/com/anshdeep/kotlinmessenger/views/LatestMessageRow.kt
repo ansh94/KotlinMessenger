@@ -55,8 +55,6 @@ class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
                             .thumbnail(0.1f)
                             .apply(requestOptions)
                             .into(viewHolder.itemView.imageview_latest_message)
-
-//                    Picasso.get().load(chatPartnerUser?.profileImageUrl).placeholder(R.drawable.no_image2).into(viewHolder.itemView.imageview_latest_message)
                 }
             }
 

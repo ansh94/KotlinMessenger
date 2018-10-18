@@ -21,6 +21,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         supportActionBar!!.elevation = 0.0f
 
+        //Todo - Remove kotlin image from screen. Add some cool Kotlin logo or gif
+
         login_button_login.setOnClickListener {
             performLogin()
         }

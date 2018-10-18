@@ -34,6 +34,7 @@ class NewMessageActivity : AppCompatActivity() {
         supportActionBar?.title = "Select User"
 
         fetchUsers()
+        //Todo - Add more users and messages for screenshots
 
         swiperefresh.setOnRefreshListener {
             fetchUsers()

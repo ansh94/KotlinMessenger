@@ -58,6 +58,9 @@ class RegisterActivity : AppCompatActivity() {
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
+            //Todo - Fix image gets rotated when added from camera bug
+
+
             selectphoto_imageview_register.setImageBitmap(bitmap)
 
             selectphoto_button_register.alpha = 0f
@@ -71,6 +74,7 @@ class RegisterActivity : AppCompatActivity() {
         val password = password_edittext_register.text.toString()
         val name = name_edittext_register.text.toString()
 
+        //Todo - make select photo mandatory field
         if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             return

@@ -20,6 +20,7 @@
         </activity>
         <activity
             android:name=".registerlogin.RegisterActivity"
+            android:configChanges="orientation|keyboard|screenSize"
             android:screenOrientation="portrait">
         </activity>
         <activity

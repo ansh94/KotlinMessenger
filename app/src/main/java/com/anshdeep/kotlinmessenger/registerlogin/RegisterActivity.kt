@@ -15,6 +15,7 @@ import com.anshdeep.kotlinmessenger.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
@@ -31,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         supportActionBar?.elevation = 0.0f
+
 
 
         register_button_register.setOnClickListener {
@@ -58,10 +60,22 @@ class RegisterActivity : AppCompatActivity() {
 
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
-            //Todo - Fix image gets rotated when added from camera bug
+            // Get and resize profile image
+            val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+            val cursor = contentResolver.query(selectedPhotoUri, filePathColumn, null, null, null)
+            cursor.moveToFirst()
 
+            val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+            val picturePath = cursor.getString(columnIndex)
+            cursor.close()
 
-            selectphoto_imageview_register.setImageBitmap(bitmap)
+            // If picture choosen from camera rotate by 270 degrees else
+            // don't rotate
+            if (picturePath.contains("DCIM")) {
+                Picasso.get().load(selectedPhotoUri).rotate(270f).into(selectphoto_imageview_register)
+            } else {
+                Picasso.get().load(selectedPhotoUri).into(selectphoto_imageview_register)
+            }
 
             selectphoto_button_register.alpha = 0f
 

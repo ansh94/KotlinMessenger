@@ -2,12 +2,15 @@ package com.anshdeep.kotlinmessenger.registerlogin
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.messages.LatestMessagesActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -19,9 +22,14 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        supportActionBar?.setCustomView(R.layout.abs_layout)
         supportActionBar!!.elevation = 0.0f
 
-        //Todo - Remove kotlin image from screen. Add some cool Kotlin logo or gif
+        Glide.with(this).asGif()
+                .load("https://media1.tenor.com/images/1d550cc7494b9ac5a85fbe4f6bc184c8/tenor.gif?itemid=11525834")
+                .apply(RequestOptions.circleCropTransform())
+                .into(kotlinImageView)
 
         login_button_login.setOnClickListener {
             performLogin()

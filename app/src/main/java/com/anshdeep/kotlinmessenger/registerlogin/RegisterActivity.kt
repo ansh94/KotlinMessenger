@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -31,8 +32,9 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        supportActionBar?.setCustomView(R.layout.abs_layout)
         supportActionBar?.elevation = 0.0f
-
 
 
         register_button_register.setOnClickListener {
@@ -88,9 +90,13 @@ class RegisterActivity : AppCompatActivity() {
         val password = password_edittext_register.text.toString()
         val name = name_edittext_register.text.toString()
 
-        //Todo - make select photo mandatory field
         if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (selectedPhotoUri == null) {
+            Toast.makeText(this, "Please select a photo", Toast.LENGTH_SHORT).show()
             return
         }
 

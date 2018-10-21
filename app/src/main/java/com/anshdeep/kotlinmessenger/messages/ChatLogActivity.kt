@@ -47,23 +47,6 @@ class ChatLogActivity : AppCompatActivity() {
 
         listenForMessages()
 
-
-//        edittext_chat_log.setOnClickListener {
-//            recyclerview_chat_log.scrollToPosition(adapter.itemCount - 1)
-//        }
-
-//        recyclerview_chat_log.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-//            override fun onLayoutChange(v: View?, p1: Int, p2: Int, p3: Int, bottom: Int, p5: Int, p6: Int, p7: Int, oldBottom: Int) {
-//
-//                if (bottom < oldBottom) {
-//                    recyclerview_chat_log.postDelayed(Runnable {
-//                        recyclerview_chat_log.smoothScrollToPosition(adapter.itemCount - 1)
-//                    }, 100)
-//                }
-//            }
-//
-//        })
-
         send_button_chat_log.setOnClickListener {
             performSendMessage()
         }

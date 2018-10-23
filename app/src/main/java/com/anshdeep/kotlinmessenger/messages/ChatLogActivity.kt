@@ -11,10 +11,7 @@ import com.anshdeep.kotlinmessenger.utils.DateUtils.getFormattedTimeChatLog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -60,6 +57,21 @@ class ChatLogActivity : AppCompatActivity() {
         val fromId = FirebaseAuth.getInstance().uid
         val toId = toUser?.uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d(LatestMessagesActivity.TAG, "database error: " + p0.message)
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.d(LatestMessagesActivity.TAG, "has children: " + p0.hasChildren())
+                if (!p0.hasChildren()) {
+                    swiperefresh.isRefreshing = false
+                    swiperefresh.isEnabled = false
+                }
+            }
+
+        })
 
         ref.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {

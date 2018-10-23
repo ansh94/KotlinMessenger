@@ -3,6 +3,7 @@ package com.anshdeep.kotlinmessenger.messages
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.anshdeep.kotlinmessenger.R
@@ -24,6 +25,8 @@ class LatestMessagesActivity : AppCompatActivity() {
 
     companion object {
         var currentUser: User? = null
+        val TAG = "LatestMessagesActivity"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +77,21 @@ class LatestMessagesActivity : AppCompatActivity() {
         swiperefresh.isRefreshing = true
         val fromId = FirebaseAuth.getInstance().uid
         val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d(TAG, "database error: " + p0.message)
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.d(TAG, "has children: " + p0.hasChildren())
+                if (!p0.hasChildren()) {
+                    swiperefresh.isRefreshing = false
+                }
+            }
+
+        })
+
 
         ref.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {

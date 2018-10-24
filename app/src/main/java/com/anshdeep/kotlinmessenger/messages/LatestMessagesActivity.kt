@@ -38,7 +38,6 @@ class LatestMessagesActivity : AppCompatActivity() {
 
         swiperefresh.setColorSchemeColors(resources.getColor(R.color.colorAccent))
 
-//        recyclerview_latest_messages.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         fetchCurrentUser()
         listenForLatestMessages()
 

@@ -60,7 +60,7 @@ class RegisterActivity : AppCompatActivity() {
 
             selectedPhotoUri = data.data
 
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
+//            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
             // Get and resize profile image
             val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)

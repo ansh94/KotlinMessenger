@@ -9,8 +9,7 @@ TODO: Add screenshots
 2. [Firebase Realtime Database](https://firebase.google.com/docs/database/)
 3. [Firebase Cloud Storage](https://firebase.google.com/docs/storage/)
 4. [Glide](https://github.com/bumptech/glide/)
-5. [Retrofit](https://github.com/square/retrofit/)
-6. [Groupie](https://github.com/lisawray/groupie)
+5. [Groupie](https://github.com/lisawray/groupie)
 
 ## License
 

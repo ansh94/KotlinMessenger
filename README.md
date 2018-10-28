@@ -2,7 +2,15 @@
 A one-to-one chat app (similar to WhatsApp) built using Kotlin and Firebase.
 
 ## Screenshots
-TODO: Add screenshots
+
+<p>
+  <img src="./graphics/screen3.png" width="360">
+  <img src="./graphics/screen4.png" width="360">
+  <img src="./graphics/screen4extra.png" width="360">
+  <img src="./graphics/screen5.png" width="360">
+  <img src="./graphics/screen1.png" width="360">
+  <img src="./graphics/screen2.png" width="360">
+</p>
 
 ## Libraries used:
 1. [Firebase Authentication](https://firebase.google.com/docs/auth/)

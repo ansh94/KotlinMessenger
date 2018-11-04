@@ -109,7 +109,7 @@ class RegisterActivity : AppCompatActivity() {
                     if (!it.isSuccessful) return@addOnCompleteListener
 
                     // else if successful
-                    Log.d(TAG, "Successfully created user with uid: ${it.result.user.uid}")
+                    Log.d(TAG, "Successfully created user with uid: ${it.result!!.user.uid}")
                     uploadImageToFirebaseStorage()
                 }
                 .addOnFailureListener {

@@ -20,7 +20,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
-
 class RegisterActivity : AppCompatActivity() {
 
     private var selectedPhotoUri: Uri? = null
@@ -35,7 +34,6 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setCustomView(R.layout.abs_layout)
         supportActionBar?.elevation = 0.0f
-
 
         register_button_register.setOnClickListener {
             performRegistration()
@@ -56,34 +54,24 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            selectedPhotoUri = data.data ?: return
             Log.d(TAG, "Photo was selected")
-
-            selectedPhotoUri = data.data
-
-//            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-
             // Get and resize profile image
             val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-            val cursor = contentResolver.query(selectedPhotoUri, filePathColumn, null, null, null)
-            cursor.moveToFirst()
-
-            val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-            val picturePath = cursor.getString(columnIndex)
-            cursor.close()
-
-            // If picture choosen from camera rotate by 270 degrees else
-            // don't rotate
-            if (picturePath.contains("DCIM")) {
-                Picasso.get().load(selectedPhotoUri).rotate(270f).into(selectphoto_imageview_register)
-            } else {
-                Picasso.get().load(selectedPhotoUri).into(selectphoto_imageview_register)
+            contentResolver.query(selectedPhotoUri!!, filePathColumn, null, null, null)?.use {
+                it.moveToFirst()
+                val columnIndex = it.getColumnIndex(filePathColumn[0])
+                val picturePath = it.getString(columnIndex)
+                // If picture chosen from camera rotate by 270 degrees else
+                if (picturePath.contains("DCIM")) {
+                    Picasso.get().load(selectedPhotoUri).rotate(270f).into(selectphoto_imageview_register)
+                } else {
+                    Picasso.get().load(selectedPhotoUri).into(selectphoto_imageview_register)
+                }
             }
-
             selectphoto_button_register.alpha = 0f
-
         }
     }
-
 
     private fun performRegistration() {
         val email = email_edittext_register.text.toString()
@@ -127,11 +115,11 @@ class RegisterActivity : AppCompatActivity() {
         } else {
             val filename = UUID.randomUUID().toString()
             val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-
             ref.putFile(selectedPhotoUri!!)
                     .addOnSuccessListener {
                         Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
 
+                        @Suppress("NestedLambdaShadowedImplicitParameter")
                         ref.downloadUrl.addOnSuccessListener {
                             Log.d(TAG, "File Location: $it")
                             saveUserToFirebaseDatabase(it.toString())
@@ -147,12 +135,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun saveUserToFirebaseDatabase(profileImageUrl: String?) {
-        val uid = FirebaseAuth.getInstance().uid ?: ""
-
+        val uid = FirebaseAuth.getInstance().uid ?: return
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
-        val user: User
-        user = if (profileImageUrl == null) {
+        val user = if (profileImageUrl == null) {
             User(uid, name_edittext_register.text.toString(), null)
         } else {
             User(uid, name_edittext_register.text.toString(), profileImageUrl)
@@ -161,7 +147,6 @@ class RegisterActivity : AppCompatActivity() {
         ref.setValue(user)
                 .addOnSuccessListener {
                     Log.d(TAG, "Finally we saved the user to Firebase Database")
-
 
                     val intent = Intent(this, LatestMessagesActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)

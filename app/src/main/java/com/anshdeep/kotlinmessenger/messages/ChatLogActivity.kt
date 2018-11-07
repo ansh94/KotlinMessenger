@@ -1,6 +1,7 @@
 package com.anshdeep.kotlinmessenger.messages
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
@@ -19,28 +20,27 @@ import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 
-
 class ChatLogActivity : AppCompatActivity() {
+
     companion object {
-        val TAG = "ChatLogActivity"
+        val TAG = ChatLogActivity::class.java.simpleName
     }
 
     val adapter = GroupAdapter<ViewHolder>()
 
-
-    var toUser: User? = null
+    // Bundle Data
+    private val toUser: User
+        get() = intent.getParcelableExtra(NewMessageActivity.USER_KEY)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
-        swiperefresh.setColorSchemeColors(resources.getColor(R.color.colorAccent))
+        swiperefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent))
 
         recyclerview_chat_log.adapter = adapter
 
-        toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-
-        supportActionBar?.title = toUser?.name
+        supportActionBar?.title = toUser.name
 
         listenForMessages()
 
@@ -53,61 +53,49 @@ class ChatLogActivity : AppCompatActivity() {
         swiperefresh.isEnabled = true
         swiperefresh.isRefreshing = true
 
-
-        val fromId = FirebaseAuth.getInstance().uid
-        val toId = toUser?.uid
+        val fromId = FirebaseAuth.getInstance().uid ?: return
+        val toId = toUser.uid
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d(LatestMessagesActivity.TAG, "database error: " + p0.message)
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d(LatestMessagesActivity.TAG, "database error: " + databaseError.message)
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                Log.d(LatestMessagesActivity.TAG, "has children: " + p0.hasChildren())
-                if (!p0.hasChildren()) {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                Log.d(LatestMessagesActivity.TAG, "has children: " + dataSnapshot.hasChildren())
+                if (!dataSnapshot.hasChildren()) {
                     swiperefresh.isRefreshing = false
                     swiperefresh.isEnabled = false
                 }
             }
-
         })
 
         ref.addChildEventListener(object : ChildEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-
+            override fun onCancelled(databaseError: DatabaseError) {
             }
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
             }
 
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
             }
 
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val chatMessage = p0.getValue(ChatMessage::class.java)
-
-
-                if (chatMessage != null) {
-
-
-                    if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                        val currentUser = LatestMessagesActivity.currentUser
-                        adapter.add(ChatFromItem(chatMessage.text, currentUser!!, chatMessage.timestamp))
+            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                dataSnapshot.getValue(ChatMessage::class.java)?.let {
+                    if (it.fromId == FirebaseAuth.getInstance().uid) {
+                        val currentUser = LatestMessagesActivity.currentUser ?: return
+                        adapter.add(ChatFromItem(it.text, currentUser, it.timestamp))
                     } else {
-                        adapter.add(ChatToItem(chatMessage.text, toUser!!, chatMessage.timestamp))
+                        adapter.add(ChatToItem(it.text, toUser, it.timestamp))
                     }
-
                 }
-
                 recyclerview_chat_log.scrollToPosition(adapter.itemCount - 1)
                 swiperefresh.isRefreshing = false
                 swiperefresh.isEnabled = false
-
-
             }
 
-            override fun onChildRemoved(p0: DataSnapshot) {
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
             }
 
         })
@@ -121,16 +109,11 @@ class ChatLogActivity : AppCompatActivity() {
             return
         }
 
-        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-        val fromId = FirebaseAuth.getInstance().uid
-        val toId = user.uid
-
-        if (fromId == null) return
+        val fromId = FirebaseAuth.getInstance().uid ?: return
+        val toId = toUser.uid
 
         val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
-
         val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
-
 
         val chatMessage = ChatMessage(reference.key!!, text, fromId, toId, System.currentTimeMillis() / 1000)
         reference.setValue(chatMessage)
@@ -142,6 +125,12 @@ class ChatLogActivity : AppCompatActivity() {
 
         toReference.setValue(chatMessage)
 
+        // todo used child updates instead of single update for all set values
+//        val childUpdates = HashMap<String, Any?>()
+//        childUpdates["/" + FirebaseConstant.REF_ROOT + "/" + FirebaseConstant.REF_RECENT_CHATS + "/" + channelName] = messageBean
+//        childUpdates["/" + FirebaseConstant.REF_ROOT + "/" + FirebaseConstant.REF_MESSAGES + "/" + channelName + "/" + messageKey] = messageBean
+//        FirebaseDatabase.getInstance().reference.updateChildren(childUpdates).addOnSuccessListener {  }
+
         val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
         latestMessageRef.setValue(chatMessage)
 
@@ -150,7 +139,6 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
 }
-
 
 class ChatFromItem(val text: String, val user: User, val timestamp: Long) : Item<ViewHolder>() {
 
@@ -179,9 +167,7 @@ class ChatFromItem(val text: String, val user: User, val timestamp: Long) : Item
         return R.layout.chat_from_row
     }
 
-
 }
-
 
 class ChatToItem(val text: String, val user: User, val timestamp: Long) : Item<ViewHolder>() {
 
@@ -194,7 +180,6 @@ class ChatToItem(val text: String, val user: User, val timestamp: Long) : Item<V
         if (!user.profileImageUrl!!.isEmpty()) {
 
             val requestOptions = RequestOptions().placeholder(R.drawable.no_image2)
-
 
             Glide.with(targetImageView.context)
                     .load(user.profileImageUrl)

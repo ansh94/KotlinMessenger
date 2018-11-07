@@ -2,6 +2,7 @@ package com.anshdeep.kotlinmessenger.messages
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.anshdeep.kotlinmessenger.R
@@ -23,13 +24,14 @@ class NewMessageActivity : AppCompatActivity() {
 
     companion object {
         const val USER_KEY = "USER_KEY"
+        private val TAG = NewMessageActivity::class.java.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
 
-        swiperefresh.setColorSchemeColors(resources.getColor(R.color.colorAccent))
+        swiperefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent))
 
         supportActionBar?.title = "Select User"
 
@@ -46,32 +48,28 @@ class NewMessageActivity : AppCompatActivity() {
 
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
+            override fun onCancelled(databaseError: DatabaseError) {
 
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val adapter = GroupAdapter<ViewHolder>()
 
-
-                p0.children.forEach {
-                    Log.d("NewMessage", it.toString())
-                    val user = it.getValue(User::class.java)
-                    if (user != null) {
-                        if(user.uid != FirebaseAuth.getInstance().uid){
-                            adapter.add(UserItem(user))
+                dataSnapshot.children.forEach {
+                    Log.d(TAG, it.toString())
+                    @Suppress("NestedLambdaShadowedImplicitParameter")
+                    it.getValue(User::class.java)?.let {
+                        if (it.uid != FirebaseAuth.getInstance().uid) {
+                            adapter.add(UserItem(it))
                         }
                     }
                 }
 
                 adapter.setOnItemClickListener { item, view ->
-
                     val userItem = item as UserItem
-
                     val intent = Intent(view.context, ChatLogActivity::class.java)
                     intent.putExtra(USER_KEY, userItem.user)
                     startActivity(intent)
-
                     finish()
                 }
 
@@ -82,7 +80,6 @@ class NewMessageActivity : AppCompatActivity() {
         })
     }
 }
-
 
 class UserItem(val user: User) : Item<ViewHolder>() {
 

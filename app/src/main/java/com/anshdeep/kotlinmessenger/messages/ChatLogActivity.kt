@@ -59,11 +59,11 @@ class ChatLogActivity : AppCompatActivity() {
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.d(LatestMessagesActivity.TAG, "database error: " + databaseError.message)
+                Log.d(TAG, "database error: " + databaseError.message)
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.d(LatestMessagesActivity.TAG, "has children: " + dataSnapshot.hasChildren())
+                Log.d(TAG, "has children: " + dataSnapshot.hasChildren())
                 if (!dataSnapshot.hasChildren()) {
                     swiperefresh.isRefreshing = false
                     swiperefresh.isEnabled = false

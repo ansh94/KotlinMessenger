@@ -19,12 +19,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".registerlogin.RegisterActivity"
+            android:name=".ui.register.RegisterActivity"
             android:configChanges="orientation|keyboard|screenSize"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".registerlogin.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

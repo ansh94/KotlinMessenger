@@ -1,4 +1,4 @@
-package com.anshdeep.kotlinmessenger.registerlogin
+package com.anshdeep.kotlinmessenger.ui.login
 
 import android.content.Intent
 import android.os.Bundle

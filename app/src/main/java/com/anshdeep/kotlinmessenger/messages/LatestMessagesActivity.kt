@@ -11,7 +11,7 @@ import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.messages.NewMessageActivity.Companion.USER_KEY
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
-import com.anshdeep.kotlinmessenger.registerlogin.RegisterActivity
+import com.anshdeep.kotlinmessenger.ui.register.RegisterActivity
 import com.anshdeep.kotlinmessenger.views.LatestMessageRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

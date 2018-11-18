@@ -1,4 +1,4 @@
-package com.anshdeep.kotlinmessenger.registerlogin
+package com.anshdeep.kotlinmessenger.ui.register
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.messages.LatestMessagesActivity
 import com.anshdeep.kotlinmessenger.models.User
+import com.anshdeep.kotlinmessenger.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage

@@ -125,11 +125,6 @@ class ChatLogActivity : AppCompatActivity() {
 
         toReference.setValue(chatMessage)
 
-        // todo used child updates instead of single update for all set values
-//        val childUpdates = HashMap<String, Any?>()
-//        childUpdates["/" + FirebaseConstant.REF_ROOT + "/" + FirebaseConstant.REF_RECENT_CHATS + "/" + channelName] = messageBean
-//        childUpdates["/" + FirebaseConstant.REF_ROOT + "/" + FirebaseConstant.REF_MESSAGES + "/" + channelName + "/" + messageKey] = messageBean
-//        FirebaseDatabase.getInstance().reference.updateChildren(childUpdates).addOnSuccessListener {  }
 
         val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
         latestMessageRef.setValue(chatMessage)

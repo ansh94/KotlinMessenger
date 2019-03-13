@@ -1,5 +1,7 @@
 package com.anshdeep.kotlinmessenger.views
 
+import android.app.Activity
+import android.content.Context
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
@@ -15,10 +17,11 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.latest_message_row.view.*
 
+
 /**
  * Created by ansh on 04/09/18.
  */
-class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
+class LatestMessageRow(val chatMessage: ChatMessage, val context: Context) : Item<ViewHolder>() {
 
     var chatPartnerUser: User? = null
 
@@ -55,10 +58,17 @@ class LatestMessageRow(val chatMessage: ChatMessage) : Item<ViewHolder>() {
                             .thumbnail(0.1f)
                             .apply(requestOptions)
                             .into(viewHolder.itemView.imageview_latest_message)
+
+                    viewHolder.itemView.imageview_latest_message.setOnClickListener {
+                        BigImageDialog.newInstance(chatPartnerUser?.profileImageUrl!!).show((context as Activity).fragmentManager
+                                , "")
+                    }
+
                 }
             }
 
         })
+
 
     }
 

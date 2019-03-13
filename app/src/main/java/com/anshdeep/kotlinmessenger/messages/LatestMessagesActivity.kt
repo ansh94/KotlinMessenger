@@ -8,10 +8,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.anshdeep.kotlinmessenger.R
+import com.anshdeep.kotlinmessenger.messages.NewMessageActivity.Companion.USER_KEY
 import com.anshdeep.kotlinmessenger.models.ChatMessage
 import com.anshdeep.kotlinmessenger.models.User
 import com.anshdeep.kotlinmessenger.ui.register.RegisterActivity
-import com.anshdeep.kotlinmessenger.views.BigImageDialog
 import com.anshdeep.kotlinmessenger.views.LatestMessageRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -24,7 +24,6 @@ class LatestMessagesActivity : AppCompatActivity() {
 
     private val adapter = GroupAdapter<ViewHolder>()
     private val latestMessagesMap = HashMap<String, ChatMessage>()
-
 
 
     companion object {
@@ -45,12 +44,12 @@ class LatestMessagesActivity : AppCompatActivity() {
         listenForLatestMessages()
 
         adapter.setOnItemClickListener { item, _ ->
-//            val intent = Intent(this, ChatLogActivity::class.java)
+            val intent = Intent(this, ChatLogActivity::class.java)
             val row = item as LatestMessageRow
-//            intent.putExtra(USER_KEY, row.chatPartnerUser)
-//            startActivity(intent)
-            BigImageDialog.newInstance(row.chatPartnerUser?.profileImageUrl!!).show(fragmentManager,"")
+            intent.putExtra(USER_KEY, row.chatPartnerUser)
+            startActivity(intent)
         }
+
 
         new_message_fab.setOnClickListener {
             val intent = Intent(this, NewMessageActivity::class.java)
@@ -67,7 +66,7 @@ class LatestMessagesActivity : AppCompatActivity() {
     private fun refreshRecyclerViewMessages() {
         adapter.clear()
         latestMessagesMap.values.forEach {
-            adapter.add(LatestMessageRow(it))
+            adapter.add(LatestMessageRow(it, this))
         }
         swiperefresh.isRefreshing = false
     }

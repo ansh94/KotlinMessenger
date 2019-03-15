@@ -55,7 +55,6 @@ class LatestMessageRow(val chatMessage: ChatMessage, val context: Context) : Ite
 
                     Glide.with(viewHolder.itemView.imageview_latest_message.context)
                             .load(chatPartnerUser?.profileImageUrl)
-                            .thumbnail(0.1f)
                             .apply(requestOptions)
                             .into(viewHolder.itemView.imageview_latest_message)
 

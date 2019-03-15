@@ -44,7 +44,6 @@ class BigImageDialog : DialogFragment() {
                 .apply(requestOptions)
                 .into(v.bigImageView)
 
-        //todo: add shared element transiton
         //todo: add bounce effect while loading images glide
 
         return v

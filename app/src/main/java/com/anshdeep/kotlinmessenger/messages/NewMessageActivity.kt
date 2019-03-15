@@ -1,5 +1,7 @@
 package com.anshdeep.kotlinmessenger.messages
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -7,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.anshdeep.kotlinmessenger.R
 import com.anshdeep.kotlinmessenger.models.User
+import com.anshdeep.kotlinmessenger.views.BigImageDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -60,7 +63,7 @@ class NewMessageActivity : AppCompatActivity() {
                     @Suppress("NestedLambdaShadowedImplicitParameter")
                     it.getValue(User::class.java)?.let {
                         if (it.uid != FirebaseAuth.getInstance().uid) {
-                            adapter.add(UserItem(it))
+                            adapter.add(UserItem(it, this@NewMessageActivity))
                         }
                     }
                 }
@@ -81,7 +84,7 @@ class NewMessageActivity : AppCompatActivity() {
     }
 }
 
-class UserItem(val user: User) : Item<ViewHolder>() {
+class UserItem(val user: User, val context: Context) : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.username_textview_new_message.text = user.name
@@ -92,9 +95,13 @@ class UserItem(val user: User) : Item<ViewHolder>() {
 
             Glide.with(viewHolder.itemView.imageview_new_message.context)
                     .load(user.profileImageUrl)
-                    .thumbnail(0.1f)
                     .apply(requestOptions)
                     .into(viewHolder.itemView.imageview_new_message)
+
+            viewHolder.itemView.imageview_new_message.setOnClickListener {
+                BigImageDialog.newInstance(user?.profileImageUrl!!).show((context as Activity).fragmentManager
+                        , "")
+            }
         }
     }
 

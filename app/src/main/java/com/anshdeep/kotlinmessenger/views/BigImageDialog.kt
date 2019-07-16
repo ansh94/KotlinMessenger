@@ -4,7 +4,7 @@ import android.app.DialogFragment
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.widget.CircularProgressDrawable
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

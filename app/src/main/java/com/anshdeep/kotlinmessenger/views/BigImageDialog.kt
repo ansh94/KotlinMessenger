@@ -44,8 +44,6 @@ class BigImageDialog : DialogFragment() {
                 .apply(requestOptions)
                 .into(v.bigImageView)
 
-        //todo: add bounce effect while loading images glide
-
         return v
     }
 
